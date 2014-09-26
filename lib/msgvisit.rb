@@ -1,15 +1,12 @@
 require 'securerandom'
+require_relative './msgbase'
 require_relative './timesim'
 
-class Msgvisit
+class Msgvisit < Msgbase
 
   def initialize(options)
     @timesim = TimeSim.new
     @options = options
-  end
-
-  def get_dimension
-    @options.m
   end
 
   def get_method
@@ -81,18 +78,9 @@ class Msgvisit
     ].sample
   end
 
-  def get_account_id
-    (1..5).to_a.sample
-  end
-
-  def get_project_id
-    (6..10).to_a.sample
-  end
-
   def buildmsg
     msg_hash = Hash.new
-    msg_hash[:account_id] = get_account_id
-    msg_hash[:project_id] = get_project_id
+    msg_hash[:token_id] = get_token_id
     dimension = get_dimension
     method = get_method
     msg_hash[:dimension] = dimension
