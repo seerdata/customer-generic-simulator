@@ -1,0 +1,4 @@
+config:
+  amqp_server: 'amqp://guest@ec2-204-236-161-9.us-west-1.compute.amazonaws.com:5672'
+  local_host: 'localhost'
+  amqp_host: 'ec2-204-236-161-9.us-west-1.compute.amazonaws.com'
