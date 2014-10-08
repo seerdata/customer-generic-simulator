@@ -80,7 +80,7 @@ class Msgvisit < Msgbase
 
   def buildmsg
     msg_hash = Hash.new
-    msg_hash[:token_id] = get_token_id
+    msg_hash[:access_token] = get_token_id
     dimension = get_dimension
     method = get_method
     msg_hash[:dimension] = dimension

@@ -26,7 +26,7 @@ class Msgjob < Msgbase
 
   def buildmsg
     msg_hash = Hash.new
-    msg_hash[:token_id] = get_token_id
+    msg_hash[:access_token] = get_token_id
     dimension = get_dimension
     msg_hash[:dimension] = dimension
     msg_hash[:key] = get_key
