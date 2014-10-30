@@ -25,11 +25,11 @@ class Msgvisit < Msgbase
 
   def get_value(method)
     if method == 'uuid'
-      1
+      '1'
     elsif method == 'useragent'
-      (1..10).to_a.sample
+      ['1.01','2.02','3.03','4.04','5.05','6.06','7.07','8.08','9.09','10.10'].sample
     else
-      (10..20).to_a.sample
+      ['1.11','2.12','3.13','4.14','5.15','6.16','7.17','8.18','9.19','10.20'].sample
     end
   end
 
