@@ -4,10 +4,6 @@ require 'pp'
 
 class Options
 
-  def parse_dash(dimension)
-    dimension.split('-')
-  end
-
   def parse(args)
 
     options = OpenStruct.new
@@ -17,11 +13,9 @@ class Options
     options.d = 10
     options.e = "test.spnee.customer"
     options.i = 1
-    options.m = "visit-useragent"
+    options.m = "job-skills"
     options.n = 2
     options.s = 10
-    options.a = "visit"
-    options.b = "useragent"
 
     opt_parser = OptionParser.new do |opts|
       opts.banner = "Usage: sim.rb [options]"
@@ -40,11 +34,6 @@ class Options
 
       opts.on("-m Dimension", "String Dimension name") do |m|
         options.m = m
-        type_method = parse_dash(options.m)
-        # type
-        options.a = type_method[0]
-        # method
-        options.b = type_method[1]
       end
 
       opts.on("-e Exchange", "String Exchange name") do |c|
@@ -75,9 +64,7 @@ class Options
         puts opts
         exit
       end
-
     end
-
     opt_parser.parse!(args)
     options
   end

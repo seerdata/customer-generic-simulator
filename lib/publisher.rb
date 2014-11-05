@@ -1,6 +1,7 @@
 
 require_relative './msgjob'
-require_relative './msgvisit'
+require_relative './msguuid'
+require_relative './msguseragent'
 require 'json'
 
 class Publisher
@@ -64,18 +65,23 @@ class Publisher
   end
 
   def get_message_type(options)
-    if options.a == 'visit'
+    if options.m == 'uuid'
       if options.verbose
-        puts 'Inside Msgvisit'
+        puts 'Inside MsgUUID'
       end
-      Msgvisit.new(options)
-    elsif options.a == 'job'
+      MsgUUID.new(options)
+    elsif options.m == 'user-agent'
+      if options.verbose
+        puts 'Inside MsgUserAgent'
+      end
+      MsgUserAgent.new(options)
+    elsif options.m == 'job-skills'
       if options.verbose
         puts 'Inside Msgjob'
       end
       Msgjob.new(options)
     else
-      print 'publisher.rb ', options.a, ' is not a supported message dimension'
+      print 'publisher.rb ', options.m, ' is not a supported message dimension'
       puts
       exit
     end

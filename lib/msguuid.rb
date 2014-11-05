@@ -1,66 +1,27 @@
-require 'securerandom'
 require_relative './msgbase'
 require_relative './timesim'
 
-class Msgvisit < Msgbase
+class MsgUUID < Msgbase
 
   def initialize(options)
     @timesim = TimeSim.new
     @options = options
   end
 
-  def get_method
-    @options.b
+  def get_key
+    get_my_visit_uuid
   end
 
-  def get_key(method)
-    if method == 'uuid'
-      get_my_visit_uuid
-    elsif method == 'useragent'
-      ['mozilla','chrome','safari'].sample
-    else
-      'none'
-    end
+  def get_value
+    ['1.01','2.02','3.03','4.04','5.05','6.06','7.07','8.08','9.09','10.10'].sample
   end
 
-  def get_value(method)
-    if method == 'uuid'
-      '1'
-    elsif method == 'useragent'
-      ['1.01','2.02','3.03','4.04','5.05','6.06','7.07','8.08','9.09','10.10'].sample
-    else
-      ['1.11','2.12','3.13','4.14','5.15','6.16','7.17','8.18','9.19','10.20'].sample
-    end
+  def get_interval
+    ['hours','weeks','months']
   end
 
-  def get_interval(method)
-    if method == 'uuid'
-      interval = ['hours','days']
-    elsif method == 'useragent'
-      interval = ['weeks']
-    else
-      interval = ['hours','days','weeks']
-    end
-  end
-
-  def get_calculation(method)
-    if method == 'uuid'
-      calculation = ['sum','average']
-    elsif method == 'useragent'
-      calculation = ['sum','average','percentage']
-    else
-      calculation = ['regression']
-    end
-  end
-
-  def get_my_random_visit_uuid
-    my_visit_uuid = []
-    for i in 0..10
-      my_visit_uuid.push(SecureRandom.uuid)
-    end
-    #puts my_visit_uuid.sort
-    #puts
-    my_visit_uuid
+  def get_calculation
+    ['count','sum','average','standard_deviation','linear_regression']
   end
 
   def get_my_visit_uuid
@@ -82,10 +43,9 @@ class Msgvisit < Msgbase
     msg_hash = Hash.new
     msg_hash[:access_token] = get_token_id
     dimension = get_dimension
-    method = get_method
     msg_hash[:dimension] = dimension
-    msg_hash[:key] = get_key(method)
-    msg_hash[:value] = get_value(method)
+    msg_hash[:key] = get_key
+    msg_hash[:value] = get_value
 
     # Publish out a random time on either side of day interval
     msg_hash[:created_at] = @timesim.get_random_time(@options.d)
@@ -93,8 +53,8 @@ class Msgvisit < Msgbase
     # Publish out the time now
     # msg_hash[:created_at] = Time.now
 
-    msg_hash[:interval] = get_interval(method)
-    msg_hash[:calculation] = get_calculation(method)
+    msg_hash[:interval] = get_interval
+    msg_hash[:calculation] = get_calculation
     msg_hash
   end
 
@@ -112,7 +72,7 @@ end
 require_relative './options'
 myoptions = Options.new
 options = myoptions.parse(ARGV)
-msg = Msgvisit.new(options)
+msg = Msgjob.new(options)
 puts msg.buildmsg
 =end
 
@@ -120,8 +80,8 @@ puts msg.buildmsg
 require_relative './options'
 myoptions = Options.new
 options = myoptions.parse(ARGV)
-msg = Msgvisit.new(options)
-n = 5
+msg = Msgjob.new(options)
+n = 3
 msgs = msg.build_n_messages(n)
 for i in 0..n
   puts msgs[i]
